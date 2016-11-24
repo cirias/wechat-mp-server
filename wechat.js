@@ -7,7 +7,7 @@ const config = require('./config');
 const wechat = new Wechat(config.wechat);
 
 wechat.on('text', session => {
-  console.log(session.incommingMessage.Content);
+  console.log(session.incomingMessage.Content);
   session.replyTextMessage("...");
 });
 

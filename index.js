@@ -3,7 +3,7 @@
 const http = require('http');
 const express = require('express');
 const morgan = require('morgan');
-const xmlparser = require('express-xml-bodyparser');
+const xmlparser = require('express-xml-parser');
 
 const wechat = require('./wechat');
 const config = require('./config');
@@ -14,7 +14,9 @@ const app = express();
 
 app.use(morgan('combined'));
 
-app.use(url, xmlparser());
+app.use(url, xmlparser({
+  type: 'text/xml',
+}));
 
 app.get(url, wechat.verifyRequest.bind(wechat));
 app.post(url, wechat.handleRequest.bind(wechat));
