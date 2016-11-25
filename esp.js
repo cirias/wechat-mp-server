@@ -1,22 +1,23 @@
-const crypto = require('crypto');
 const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
+
+const config = require('./config');
 
 const MAX_RECORDS_COUNT = 30 * 24 * 60;
 const records = [];
 
 server.on('message', (msg, rinfo) => {
-  const [signature, timestamp, payload...] = msg.split(' ');
-  const str = timestamp + token;
-  const sign = crypto.createHash('sha1').update(str).digest('hex');
-  if (signature !== sign) {
-    console.log(`server got invalid msg: ${msg} from ${rinfo.address}:${rinfo.port}`);
+  console.log(`[esp] receive msg: ${msg}`);
+
+  const values = msg.toString().split(' ');
+  if (values.length !== 3) {
+    console.log(`[esp] invalid msg: ${msg}`);
     return;
   }
 
-  const [temperature, humidity] = payload;
+  const [id, temperature, humidity] = values;
   const record = {
-    timestamp,
+    timestamp: Date.now(),
     temperature: Number(temperature),
     humidity: Number(humidity),
   };
@@ -28,16 +29,16 @@ server.on('message', (msg, rinfo) => {
 });
 
 server.on('error', (err) => {
-  console.log(`server error:\n${err.stack}`);
+  console.log(`[esp] error:\n${err.stack}`);
   server.close();
 });
 
 server.on('listening', () => {
   var address = server.address();
-  console.log(`server listening ${address.address}:${address.port}`);
+  console.log(`[esp] listening ${address.address}:${address.port}`);
 });
 
-server.bind(41234);
+server.bind(config.esp.port);
 
 module.exports = {
   records,

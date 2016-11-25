@@ -3,9 +3,12 @@
 const { WECHAT_TOKEN } = process.env;
 
 module.exports = {
-  port: 8080,
+  esp: {
+    port: 13131,
+  },
   wechat: {
     token: WECHAT_TOKEN,
     url: '/wechat',
+    port: 8080,
   },
 };

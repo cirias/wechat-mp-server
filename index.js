@@ -8,7 +8,7 @@ const xmlparser = require('express-xml-parser');
 const wechat = require('./wechat');
 const config = require('./config');
 
-const { port, wechat: { url } } = config;
+const { wechat: { url, port } } = config;
 
 const app = express();
 
@@ -22,4 +22,4 @@ app.get(url, wechat.verifyRequest.bind(wechat));
 app.post(url, wechat.handleRequest.bind(wechat));
 
 http.createServer(app).listen(port);
-console.log(`listening ${port}`);
+console.log(`[wechat] listening ${port}`);
