@@ -1,5 +1,6 @@
 'use strict';
 
+const moment = require('moment');
 const Wechat = require('nodejs-wechat');
 
 const esp = require('./esp');
@@ -17,9 +18,12 @@ wechat.on('text', session => {
     session.replyTextMessage("no records");
   } else {
     const { timestamp, temperature, humidity } = recentRecord;
-    session.replyTextMessage(`${timestamp}
-      Temperature(C): ${temperature}
-      Humidity(%RH): ${humidity}`);
+    const date = moment(timestamp).format("YYYY-MM-DD HH:mm:ss");
+
+    session.replyTextMessage(`Date: ${date}
+
+Temperature(C): ${temperature}
+Humidity(%RH):  ${humidity}`);
   }
 });
 
