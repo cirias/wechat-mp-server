@@ -41,4 +41,4 @@ function loop()
   end
 end
 
-tmr.alarm(0, 5000, tmr.ALARM_SINGLE, loop)
+tmr.alarm(0, 5000, tmr.ALARM_AUTO, loop)
