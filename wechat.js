@@ -18,7 +18,7 @@ wechat.on('text', session => {
     session.replyTextMessage("no records");
   } else {
     const { timestamp, temperature, humidity } = recentRecord;
-    const date = moment(timestamp).format("YYYY-MM-DD HH:mm:ss");
+    const date = moment(timestamp).utcOffset("+08:00").format("YYYY-MM-DD HH:mm:ss");
 
     session.replyTextMessage(`Date: ${date}
 
